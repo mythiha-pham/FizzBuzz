@@ -1,20 +1,18 @@
+import pytest
 from fizzbuzz import fizzbuzz
 
 def load_expected_outputs(filename):
     expected_outputs = {}
     with open(filename, 'r') as file:
-        for number in range(1, 101):
-            expected_outputs[number] = file.readline().strip()  # Read each line for numbers 1 to 100
-    return expected_outputs
+        return [line.strip() for line in file.readlines()]
 
-def test_fizzbuzz_stage1():
-    expected_outputs = load_expected_outputs('testdata/fizzbuzz_stage1.txt')
-    
-    for number in range(1, 101):
-        assert fizzbuzz(number, stage=1) == expected_outputs[number]
+@pytest.mark.parametrize("stage, filename", [
+    (1, 'testdata/fizzbuzz_stage1.txt'),
+    (2, 'testdata/fizzbuzz_stage2.txt')
+])
 
-def test_fizzbuzz_stage2():
-    expected_outputs = load_expected_outputs('testdata/fizzbuzz_stage2.txt')
+def test_fizzbuzz(stage, filename):
+    expected_outputs = load_expected_outputs(filename)
     
-    for number in range(1, 101):
-        assert fizzbuzz(number, stage=2) == expected_outputs[number]
+    for number, expected_output in enumerate(expected_outputs, start=1):
+        assert fizzbuzz(number, stage) == expected_output
