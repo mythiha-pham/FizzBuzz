@@ -7,8 +7,14 @@ def load_expected_outputs(filename):
             expected_outputs[number] = file.readline().strip()  # Read each line for numbers 1 to 100
     return expected_outputs
 
-def test_fizzbuzz():
+def test_fizzbuzz_stage1():
     expected_outputs = load_expected_outputs('testdata/fizzbuzz_stage1.txt')
     
     for number in range(1, 101):
-        assert fizzbuzz(number) == expected_outputs[number]
+        assert fizzbuzz(number, stage=1) == expected_outputs[number]
+
+def test_fizzbuzz_stage2():
+    expected_outputs = load_expected_outputs('testdata/fizzbuzz_stage2.txt')
+    
+    for number in range(1, 101):
+        assert fizzbuzz(number, stage=2) == expected_outputs[number]
